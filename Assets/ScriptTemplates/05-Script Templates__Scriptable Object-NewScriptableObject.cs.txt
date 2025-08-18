@@ -1,0 +1,18 @@
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+
+namespace Game.$
+{
+    [CreateAssetMenu(fileName = "#SCRIPTNAME#", menuName = "ScriptableObjects/#SCRIPTNAME#")]
+    public class #SCRIPTNAME# : ScriptableObject
+    {
+        #region fields & properties
+
+        #endregion fields & properties
+
+        #region methods
+
+        #endregion methods
+    }
+}

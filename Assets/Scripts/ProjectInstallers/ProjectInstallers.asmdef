@@ -1,0 +1,29 @@
+{
+    "name": "ProjectInstallers",
+    "rootNamespace": "",
+    "references": [
+        "GUID:c05688badc2466243af4cd078dce71da",
+        "GUID:5448f0d6e8c7f6545b47bca45e807f57",
+        "GUID:13edc8324cf29ea4da10f8a30efa7ed3",
+        "GUID:45864171a08306d4784d9c0cec1b2b25",
+        "GUID:0d8beb7f090555447a6cf5ce9e54dbb4",
+        "GUID:836ab54c579345c4aa978e6dca8b50ae",
+        "GUID:69ca8e1ec0148ae428112c8a6c9147d3",
+        "GUID:d0a7aadf6a781304cba62ba0fe4476ad",
+        "GUID:17f44bc606552d748a437b657f6d10af",
+        "GUID:138bb3f4eeecc434999c9652f5585481",
+        "GUID:d28e236f83a6dd64b9f7695ed022ba0b",
+        "GUID:a8dc50c745b446c4ab5c9973beb28509",
+        "GUID:0bafb330e3f33b84487095f0705e4847",
+        "GUID:a44c1ee2e28b2034c85793c148b2090a"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}

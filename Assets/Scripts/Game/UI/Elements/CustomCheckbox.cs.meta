@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+guid: 55baac87a0f78224fab84130f3a1b2f4
+MonoImporter:
+  externalObjects: {}
+  serializedVersion: 2
+  defaultReferences:
+  - activeMark: {instanceID: 0}
+  - background: {instanceID: 0}
+  - activeTexture: {fileID: 21300000, guid: 9af946a94da02844c9f9fd65f5f9916e, type: 3}
+  - disableTexture: {fileID: 21300000, guid: fd794b924f3fadb449736398a2e7732b, type: 3}
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

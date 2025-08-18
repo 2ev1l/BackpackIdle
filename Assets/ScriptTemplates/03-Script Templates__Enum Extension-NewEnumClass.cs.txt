@@ -1,0 +1,20 @@
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+
+namespace Game.$
+{
+    #region enum
+    public enum #SCRIPTNAME#
+    {
+        
+    }
+    #endregion enum
+
+    public static class #SCRIPTNAME#Extension
+    {
+        #region methods
+        
+        #endregion methods
+    }
+}

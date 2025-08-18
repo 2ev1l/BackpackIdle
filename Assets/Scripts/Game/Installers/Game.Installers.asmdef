@@ -1,0 +1,31 @@
+{
+    "name": "Game.Installers",
+    "rootNamespace": "",
+    "references": [
+        "GUID:0d8beb7f090555447a6cf5ce9e54dbb4",
+        "GUID:c05688badc2466243af4cd078dce71da",
+        "GUID:5448f0d6e8c7f6545b47bca45e807f57",
+        "GUID:138bb3f4eeecc434999c9652f5585481",
+        "GUID:5379cd7dce5f4454cad7cfc0845a44cb",
+        "GUID:d0a7aadf6a781304cba62ba0fe4476ad",
+        "GUID:0bafb330e3f33b84487095f0705e4847",
+        "GUID:6d62fd3f1ac28e74aa5db686d82f5494",
+        "GUID:836ab54c579345c4aa978e6dca8b50ae",
+        "GUID:2fc7da79224eaca478dfb3ba9a477ba5",
+        "GUID:8780d0e8ba305f14a9b498ca8cf8ea0d",
+        "GUID:69ca8e1ec0148ae428112c8a6c9147d3",
+        "GUID:35c422ba5bc9d2a4fa8d42161dde44b2",
+        "GUID:e0dd7433d52d8c34c99df3f559c8e8a0",
+        "GUID:02fa153e9d6e2db48ad53787df80030d",
+        "GUID:8c8a8b11926803842a8a5dc41eed7458"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}
