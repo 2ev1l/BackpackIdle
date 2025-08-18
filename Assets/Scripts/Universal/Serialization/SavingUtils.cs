@@ -27,6 +27,10 @@ namespace Universal.Serialization
             LoadAll();
         }
         protected abstract void CheckSaves();
+        public static bool IsFileExistsInPP(string key)
+        {
+            return PlayerPrefs.HasKey(key);
+        }
         public static bool IsFileExists(string dataPath, string fullFileName)
         {
             return File.Exists(Path.Combine(dataPath, fullFileName));
@@ -57,6 +61,22 @@ namespace Universal.Serialization
         protected abstract void LoadSettings();
 
         public abstract void ResetTotalProgress(bool doAction = true);
+
+        public static void SaveJsonToPP<T>(string key, T data)
+        {
+            string json = JsonUtility.ToJson(data, true);
+            PlayerPrefs.SetString(key, json);
+            PlayerPrefs.Save();
+        }
+        public static T LoadJsonFromPP<T>(string key)
+        {
+            if (!PlayerPrefs.HasKey(key))
+                return default;
+
+            string json = PlayerPrefs.GetString(key);
+            T data = JsonUtility.FromJson<T>(json);
+            return data;
+        }
 
         public static void SaveJson<T>(string dataPath, T data, string saveName)
         {

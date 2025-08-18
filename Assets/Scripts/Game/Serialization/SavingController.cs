@@ -16,38 +16,23 @@ namespace Game.Serialization
         #region methods
         protected override void CheckSaves()
         {
-            if (!IsFileExists(Application.persistentDataPath, GameData.SaveName + GameData.SaveExtension)) ResetTotalProgress();
-            if (!IsFileExists(Application.persistentDataPath, SettingsData.SaveName + SettingsData.SaveExtension)) ResetSettings();
+            if (!IsFileExistsInPP(GameData.SaveName)) ResetTotalProgress();
+            if (!IsFileExistsInPP(SettingsData.SaveName)) ResetSettings();
         }
 
         public override void SaveGameData()
         {
             OnBeforeSave?.Invoke();
-            string rawJson = JsonUtility.ToJson(GameData.Data);
-            string json = Cryptography.Encrypt(rawJson);
-            using (FileStream fs = new FileStream(Path.Combine(Application.persistentDataPath, GameData.SaveName + GameData.SaveExtension), FileMode.Create))
-            {
-                var bf = new BinaryFormatter();
-                bf.Serialize(fs, json);
-                fs.Close();
-            }
+            SaveJsonToPP(GameData.SaveName, GameData.Data);
             OnAfterSave?.Invoke();
         }
         public override void SaveSettings()
         {
-            SaveJson(Application.persistentDataPath, SettingsData.Data, SettingsData.SaveName + SettingsData.SaveExtension);
+            SaveJsonToPP(SettingsData.SaveName, SettingsData.Data);
         }
         protected override void LoadGameData()
         {
-            string json;
-            using (FileStream fs = new FileStream(Path.Combine(Application.persistentDataPath, GameData.SaveName + ".data"), FileMode.Open))
-            {
-                var bf = new BinaryFormatter();
-                json = bf.Deserialize(fs).ToString();
-                json = Cryptography.Decrypt(json);
-                fs.Close();
-            }
-            GameData gd = JsonUtility.FromJson<GameData>(json);
+            GameData gd = LoadJsonFromPP<GameData>(GameData.SaveName);
             if (gd == null)
             {
                 Debug.Log("Game data reset");
@@ -57,12 +42,12 @@ namespace Game.Serialization
         }
         protected override void LoadSettings()
         {
-            SettingsData d = LoadJson<SettingsData>(Application.persistentDataPath, SettingsData.SaveName + SettingsData.SaveExtension);
+            SettingsData d = LoadJsonFromPP<SettingsData>(SettingsData.SaveName);
             if (d == null)
             {
                 Debug.Log("Settings reset");
                 d = new();
-                SaveJson(Application.persistentDataPath, d, SettingsData.SaveName + SettingsData.SaveExtension);
+                SaveJsonToPP(SettingsData.SaveName, d);
             }
             SettingsData.SetData(d);
         }
