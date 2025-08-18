@@ -1,0 +1,39 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 050d88682cc635e42bbe9f235ebcd5b1, type: 3}
+  m_Name: WeaponInfo 2
+  m_EditorClassIdentifier: 
+  nameInfo:
+    id: 7
+    textType: 2
+  effectBinding:
+    effect: {fileID: 11400000, guid: 8d27fb63d33ffc04483b6fd2047e788a, type: 2}
+    targetType: 1
+    particles:
+      prefab: {fileID: 6254875551582933815, guid: b650dcf1c82bbd941b5509a7863fcb7b, type: 3}
+      target: 1
+  levelsInfo:
+  - itemIcon: {fileID: 21300000, guid: a966273072c0b2044aaf3004af30f1e6, type: 3}
+    effectValue: 10
+  - itemIcon: {fileID: 21300000, guid: e0b57014e344234478252b5a31ec93b9, type: 3}
+    effectValue: 20
+  activationDelayInfo: {fileID: 11400000, guid: 714a6d176af69dd4781a6137a55c34fb, type: 2}
+  activationDelay: 3
+  isAutoActivatable: 0
+  prefab: {fileID: 2281499026738982047, guid: 2bfb7616eff3ff94aaa9fb453e5bca6a, type: 3}
+  shape:
+    width: 2
+    height: 2
+    shapeGrid: 01010101
+  originalProjectileTexture: 1
+  projectile: {fileID: 0}
+  projectileSpeed: 0.7
