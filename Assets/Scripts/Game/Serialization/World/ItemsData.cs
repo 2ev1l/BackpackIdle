@@ -19,6 +19,7 @@ namespace Game.DataBase
         #endregion fields & properties
 
         #region methods
+        public int GetFreeId() => itemCounter;
         public void RemoveItem(int dataId)
         {
             ItemData item = FindItem(dataId);
@@ -29,7 +30,7 @@ namespace Game.DataBase
         public ItemData AddItem(int infoId)
         {
             if (infoId < 0) return null;
-            ItemData item = new(infoId, itemCounter);
+            ItemData item = new(infoId, GetFreeId());
             itemCounter++;
             items.Add(item);
             OnItemAdded?.Invoke(item);

@@ -6,7 +6,7 @@ using Universal.Collections.Generic;
 
 namespace Game.UI.Collections
 {
-    public abstract class ContextInfinityList<T> : InfinityItemListBase<ContextItem<T>, T> where T : class
+    public abstract class ContextInfinityList<T> : InfinityItemListBase<ContextItem<T>, T>
     {
         #region fields & properties
 

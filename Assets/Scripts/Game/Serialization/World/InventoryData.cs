@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using UnityEngine.Events;
 using Universal.Core;
 
 namespace Game.Serialization.World
@@ -12,16 +13,24 @@ namespace Game.Serialization.World
     {
         #region fields & properties
         public const int CLEAR = -1;
+        public const int DEFAULT_SIZE = 3;
+        public UnityAction OnSizeChanged;
         public ItemsData ItemsData => itemsData;
         [SerializeField] private ItemsData itemsData = new();
         [SerializeField] private List<int> items = new() { CLEAR, CLEAR, CLEAR, CLEAR, CLEAR, CLEAR, CLEAR, CLEAR, CLEAR };
         public int Width => width;
-        [SerializeField][Min(1)] private int width = 3;
+        [SerializeField][Min(1)] private int width = DEFAULT_SIZE;
         public int Height => height;
-        [SerializeField][Min(1)] private int height = 3;
+        [SerializeField][Min(1)] private int height = DEFAULT_SIZE;
         #endregion fields & properties
 
         #region methods
+        public Vector2Int GetCoordinatesFromIndex(int index)
+        {
+            int x = index % width;
+            int y = index / width;
+            return new Vector2Int(Mathf.Abs(x), y);
+        }
 
         public int FindTopLeftCellOfItem(int itemIdToFind)
         {
@@ -46,6 +55,7 @@ namespace Game.Serialization.World
             this.items.AddRange(Enumerable.Repeat<int>(CLEAR, cellsToAdd));
 
             this.height = newHeight;
+            OnSizeChanged?.Invoke();
         }
 
         public void IncreaseWidth() => IncreaseWidth(1);
@@ -76,6 +86,7 @@ namespace Game.Serialization.World
 
             this.items = newItems;
             this.width = newWidth;
+            OnSizeChanged?.Invoke();
         }
         public bool CanPlaceItem(ItemData itemToPlace, int startX, int startY, out ItemData occupiedItem)
         {
@@ -125,6 +136,10 @@ namespace Game.Serialization.World
 
             Shape itemShape = itemToPlace.Info.ItemInfo.Shape;
             int itemID = itemToPlace.DataId;
+            if (itemID == -1)
+            {
+                itemID = ItemsData.GetFreeId();
+            }
 
             for (int y = 0; y < itemShape.Height; y++)
             {

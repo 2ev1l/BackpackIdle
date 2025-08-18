@@ -18,8 +18,6 @@ namespace Game.Fight
     public class ItemInstance : StaticPoolableObject
     {
         #region fields & properties
-        public const int ITEM_CELL_SIZE = 288;
-
         [SerializeField] private Image icon;
         #endregion fields & properties
 
@@ -79,8 +77,8 @@ namespace Game.Fight
             Undo.RegisterCompleteObjectUndo(gameObject, "Change rect transform size");
             Shape shape = info.Shape;
             RectTransform rt = GetComponent<RectTransform>();
-            rt.SetSizeWithCurrentAnchors(RectTransform.Axis.Horizontal, ITEM_CELL_SIZE * shape.Width);
-            rt.SetSizeWithCurrentAnchors(RectTransform.Axis.Vertical, ITEM_CELL_SIZE * shape.Height);
+            rt.SetSizeWithCurrentAnchors(RectTransform.Axis.Horizontal,InventoryInstance.ITEM_CELL_SIZE * shape.Width);
+            rt.SetSizeWithCurrentAnchors(RectTransform.Axis.Vertical, InventoryInstance.ITEM_CELL_SIZE * shape.Height);
             EditorUtility.SetDirty(gameObject);
         }
         protected void CreatePrefab()
