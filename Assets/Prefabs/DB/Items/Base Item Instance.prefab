@@ -101,6 +101,7 @@ GameObject:
   m_Component:
   - component: {fileID: 8770209875028070795}
   - component: {fileID: 107155256467649965}
+  - component: {fileID: 4365265141814083144}
   m_Layer: 5
   m_Name: Base Item Instance
   m_TagString: Untagged
@@ -141,5 +142,40 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   icon: {fileID: 731902937116938261}
+  draggableElement: {fileID: 4365265141814083144}
   itemInfo: {fileID: 11400000, guid: d80dc0ea9f1ebfe4ea56a257d87eed5c, type: 2}
   levelToSet: 1
+--- !u!114 &4365265141814083144
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4004576793634213324}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 297515cef85fdaa49b4e704c07f89042, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  doRaycastOnly: 0
+  onClickEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  onHoverEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  onExitEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  onBeginDragEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  onDragEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  onDragWithDataEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  onEndDragEvent:
+    m_PersistentCalls:
+      m_Calls: []

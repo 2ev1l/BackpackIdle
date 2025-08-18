@@ -7,6 +7,10 @@ using UnityEngine;
 using UnityEngine.UI;
 using Universal.Collections;
 using Universal.Core;
+using Game.Serialization.World;
+using Game.UI.Elements;
+using UnityEngine.EventSystems;
+using Universal.Events;
 
 #if UNITY_EDITOR
 using UnityEditor;
@@ -15,14 +19,127 @@ using UnityEditor;
 
 namespace Game.Fight
 {
+    [RequireComponent(typeof(ItemMove))]
+    [RequireComponent(typeof(CustomButton))]
     public class ItemInstance : StaticPoolableObject
     {
         #region fields & properties
         [SerializeField] private Image icon;
+        private ItemMove ItemMove
+        {
+            get
+            {
+                if (itemMove == null)
+                    itemMove = GetComponent<ItemMove>();
+                return itemMove;
+            }
+        }
+        private ItemMove itemMove;
+        private CustomButton Button
+        {
+            get
+            {
+                if (button == null)
+                    button = GetComponent<CustomButton>();
+                return button;
+            }
+        }
+        private CustomButton button;
+        private ItemData data = null;
+        public bool IsSelected => isSelected;
+        private bool isSelected = false;
+        private int storedIndex = -1;
         #endregion fields & properties
 
         #region methods
+        public void Initialize(ItemData data)
+        {
+            UnSubscribe();
+            this.data = data;
+            UpdateUI();
+            Subscribe();
+        }
+        private void OnEnable()
+        {
 
+        }
+        private void OnDisable()
+        {
+            DeSelect();
+        }
+        private void Subscribe()
+        {
+            Button.OnClickEvent.AddListener(ShowInfo);
+            ItemMove.OnMoveStart += OnMoveStart;
+            ItemMove.OnMoveEnd += OnMoveEnd;
+            if (data != null)
+                data.OnUpgraded += UpdateUI;
+        }
+        private void UnSubscribe()
+        {
+            Button.OnClickEvent.RemoveListener(ShowInfo);
+            ItemMove.OnMoveStart -= OnMoveStart;
+            ItemMove.OnMoveEnd -= OnMoveEnd;
+            if (data != null)
+                data.OnUpgraded -= UpdateUI;
+        }
+        public void UpdateUI(int _) => UpdateUI();
+        public void UpdateUI()
+        {
+            icon.sprite = data.Info.ItemInfo.GetLevelInfo(data.Level).ItemIcon;
+        }
+        private void Select() => isSelected = true;
+        private void DeSelect() => isSelected = false;
+        private void OnMoveStart()
+        {
+            Select();
+            TryRemoveItem();
+        }
+        private void OnMoveEnd()
+        {
+            TryChangePosition();
+            DeSelect();
+        }
+        private void TryRemoveItem()
+        {
+            storedIndex = GameData.Data.PlayerData.Inventory.FindTopLeftCellOfItem(data.DataId);
+            GameData.Data.PlayerData.Inventory.RemoveItem(data.DataId);
+        }
+        private void TryChangePosition()
+        {
+            RectTransform rt = (RectTransform)transform;
+            Vector2 anchoredPosition = rt.anchoredPosition;
+            anchoredPosition.x -= rt.rect.width;
+            int cellId = PlayerInventoryInstance.Instance.GetCellIndexFromPosition(anchoredPosition);
+            if (cellId == InventoryData.CLEAR)
+            {
+                ItemMove.ResetPositionToDefaultParent();
+                return;
+            }
+
+            if (TryPlaceItemByIndex(cellId))
+            {
+                Destroy(gameObject);
+                return;
+            }
+            if (storedIndex > 0 && TryPlaceItemByIndex(storedIndex))
+            {
+                Destroy(gameObject);
+                return;
+            }
+
+            ItemMove.ResetPositionToDefaultParent();
+        }
+        private bool TryPlaceItemByIndex(int index)
+        {
+            Vector2Int coordinates = GameData.Data.PlayerData.Inventory.GetCoordinatesFromIndex(index);
+            return GameData.Data.PlayerData.Inventory.TryPlaceItem(data, coordinates.x, coordinates.y);
+        }
+        public void ShowInfo()
+        {
+            if (isSelected) return;
+            Debug.Log("Info");
+        }
         #endregion methods
 
 #if UNITY_EDITOR
@@ -77,7 +194,7 @@ namespace Game.Fight
             Undo.RegisterCompleteObjectUndo(gameObject, "Change rect transform size");
             Shape shape = info.Shape;
             RectTransform rt = GetComponent<RectTransform>();
-            rt.SetSizeWithCurrentAnchors(RectTransform.Axis.Horizontal,InventoryInstance.ITEM_CELL_SIZE * shape.Width);
+            rt.SetSizeWithCurrentAnchors(RectTransform.Axis.Horizontal, InventoryInstance.ITEM_CELL_SIZE * shape.Width);
             rt.SetSizeWithCurrentAnchors(RectTransform.Axis.Vertical, InventoryInstance.ITEM_CELL_SIZE * shape.Height);
             EditorUtility.SetDirty(gameObject);
         }

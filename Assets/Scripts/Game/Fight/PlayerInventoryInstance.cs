@@ -10,10 +10,14 @@ namespace Game.Fight
     public class PlayerInventoryInstance : InventoryInstance
     {
         #region fields & properties
-
+        public static PlayerInventoryInstance Instance { get; private set; }
         #endregion fields & properties
 
         #region methods
+        public void ForceInitialize()
+        {
+            Instance = this;
+        }
         protected override void OnEnable()
         {
             base.OnEnable();

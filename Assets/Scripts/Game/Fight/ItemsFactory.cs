@@ -9,6 +9,7 @@ namespace Game.Fight
     public class ItemsFactory
     {
         #region fields & properties
+        public RectTransform ItemsParent => itemsParent;
         [SerializeField] private RectTransform itemsParent;
         /// <summary>
         /// Can be made with <see cref="Universal.Collections.Generic.ObjectPool{T}"/> for garbage optimization
@@ -51,6 +52,7 @@ namespace Game.Fight
         private ItemInstance SpawnItem(ItemData item)
         {
             ItemInstance instance = GameObject.Instantiate<ItemInstance>(item.Info.ItemInfo.Prefab as ItemInstance, itemsParent);
+            instance.Initialize(item);
             instances.Add(item, instance);
             return instance;
         }
@@ -58,6 +60,7 @@ namespace Game.Fight
         {
             ItemInstance instance = instances[item];
             instances.Remove(item);
+            if (instance.IsSelected) return;
             GameObject.Destroy(instance.gameObject);
         }
         private void MoveItemToPosition(InventoryData inventory, ItemInstance item, int position)

@@ -18,6 +18,9 @@ namespace Game.Fight
         public const int CELL_PADDING = 96;
         public const int DEFAULT_BACKPACK_SIZE = 1024;
 
+        public RectTransform ItemsDefaultParent => itemsDefaultParent;
+        [SerializeField] private RectTransform itemsDefaultParent;
+        public RectTransform ItemsParent => itemsFactory.ItemsParent;
         [SerializeField] private RectTransform backpackTransform;
         [SerializeField] private ItemsFactory itemsFactory;
         [SerializeField] private Vector2Int sizeLimit = new(6, 6);
@@ -56,7 +59,8 @@ namespace Game.Fight
         }
         public void LoadItem(ItemData itemData)
         {
-            itemsFactory.SpawnItemAtPosition(Context, itemData, Context.FindTopLeftCellOfItem(itemData.DataId));
+            int cellId = Context.FindTopLeftCellOfItem(itemData.DataId);
+            itemsFactory.SpawnItemAtPosition(Context, itemData, cellId);
         }
         private void UpdateBackpackUI()
         {
@@ -82,11 +86,52 @@ namespace Game.Fight
         }
         public void FixBackpackTransform()
         {
-            int verticalOversize = Context.Height - InventoryData.DEFAULT_SIZE;
-            int horizontalOversize = Context.Width - InventoryData.DEFAULT_SIZE;
-            backpackTransform.SetSizeWithCurrentAnchors(RectTransform.Axis.Horizontal, DEFAULT_BACKPACK_SIZE + horizontalOversize * ITEM_CELL_SIZE);
-            backpackTransform.SetSizeWithCurrentAnchors(RectTransform.Axis.Vertical, DEFAULT_BACKPACK_SIZE + verticalOversize * ITEM_CELL_SIZE);
+            backpackTransform.SetSizeWithCurrentAnchors(RectTransform.Axis.Horizontal, GetGridWidth());
+            backpackTransform.SetSizeWithCurrentAnchors(RectTransform.Axis.Vertical, GetGridHeight());
         }
+        private float GetGridWidth()
+        {
+            int horizontalOversize = Context.Width - InventoryData.DEFAULT_SIZE;
+            return DEFAULT_BACKPACK_SIZE + horizontalOversize * ITEM_CELL_SIZE;
+        }
+        private float GetGridHeight()
+        {
+            int verticalOversize = Context.Height - InventoryData.DEFAULT_SIZE;
+            return DEFAULT_BACKPACK_SIZE + verticalOversize * ITEM_CELL_SIZE;
+        }
+
+        public int GetCellIndexFromPosition(Vector2 anchoredPosition)
+        {
+            float localX = anchoredPosition.x;
+            float localY = -anchoredPosition.y;
+            
+            if (localX < 0 || localY < 0)
+            {
+                return -1;
+            }
+
+            float totalGridWidth = GetGridWidth();
+            float totalGridHeight = GetGridHeight();
+
+            if (localX >= totalGridWidth || localY >= totalGridHeight)
+            {
+                return -1;
+            }
+
+            int cellX = Mathf.FloorToInt(localX / ITEM_CELL_SIZE);
+            int cellY = Mathf.FloorToInt(localY / ITEM_CELL_SIZE);
+
+            if (cellX >= Context.Width || cellY >= Context.Height)
+            {
+                return -1;
+            }
+
+            int index = cellY * Context.Width + cellX;
+
+            return index;
+
+        }
+
         public override void OnListUpdate(InventoryData param)
         {
             base.OnListUpdate(param);

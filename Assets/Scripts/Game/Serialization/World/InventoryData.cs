@@ -135,11 +135,7 @@ namespace Game.Serialization.World
             }
 
             Shape itemShape = itemToPlace.Info.ItemInfo.Shape;
-            int itemID = itemToPlace.DataId;
-            if (itemID == -1)
-            {
-                itemID = ItemsData.GetFreeId();
-            }
+            int itemID = ItemsData.GetFreeId();
 
             for (int y = 0; y < itemShape.Height; y++)
             {
@@ -149,7 +145,7 @@ namespace Game.Serialization.World
                     SetItemAt(itemID, startX + x, startY + y);
                 }
             }
-            ItemsData.AddItem(itemToPlace.Id);
+            ItemsData.AddItem(itemToPlace.Id, itemToPlace.Level);
             return true;
         }
         private bool TryUpgradeItem(ItemData movedItem, ItemData occupiedItem)
@@ -159,7 +155,6 @@ namespace Game.Serialization.World
                               movedItem.Level == occupiedItem.Level;
 
             if (!canUpgrade) return false;
-
             return occupiedItem.TryUpgrade();
         }
 

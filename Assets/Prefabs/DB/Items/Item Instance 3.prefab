@@ -135,8 +135,20 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   icon: {fileID: 4153188587483680361}
+  draggableElement: {fileID: 1089769230162288692}
   itemInfo: {fileID: 11400000, guid: 4495c5b46dee3014a915f63f0d7f9c3b, type: 2}
   levelToSet: 1
+--- !u!114 &1089769230162288692 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 4365265141814083144, guid: b7f6a325d2a866a47b66f4ad4bec8960, type: 3}
+  m_PrefabInstance: {fileID: 3714109407630483068}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 295047020057940912}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 297515cef85fdaa49b4e704c07f89042, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &4153188587483680361 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 731902937116938261, guid: b7f6a325d2a866a47b66f4ad4bec8960, type: 3}

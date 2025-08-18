@@ -27,10 +27,10 @@ namespace Game.DataBase
             items.Remove(item);
             OnItemRemoved?.Invoke(item);
         }
-        public ItemData AddItem(int infoId)
+        public ItemData AddItem(int infoId, int level = 1)
         {
             if (infoId < 0) return null;
-            ItemData item = new(infoId, GetFreeId());
+            ItemData item = new(infoId, GetFreeId(), level);
             itemCounter++;
             items.Add(item);
             OnItemAdded?.Invoke(item);

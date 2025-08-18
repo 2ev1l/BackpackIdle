@@ -271,8 +271,8 @@ RectTransform:
   m_Father: {fileID: 229583162}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 1, y: 0.45585644}
-  m_AnchoredPosition: {x: 0, y: 239.63}
+  m_AnchorMax: {x: 1, y: 0.39571786}
+  m_AnchoredPosition: {x: 0, y: 239.63034}
   m_SizeDelta: {x: 0, y: -710.7}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &48442140
@@ -292,7 +292,7 @@ MonoBehaviour:
     m_Right: 64
     m_Top: 64
     m_Bottom: 64
-  m_ChildAlignment: 7
+  m_ChildAlignment: 4
   m_Spacing: 128
   m_ChildForceExpandWidth: 0
   m_ChildForceExpandHeight: 1
@@ -2457,7 +2457,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 956983946819859878, guid: 896fd497b6191f347bcaa740e5bc4984, type: 3}
       propertyPath: m_SizeDelta.x
-      value: 1024
+      value: 576
       objectReference: {fileID: 0}
     - target: {fileID: 956983946819859878, guid: 896fd497b6191f347bcaa740e5bc4984, type: 3}
       propertyPath: m_SizeDelta.y
@@ -2493,7 +2493,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 956983946819859878, guid: 896fd497b6191f347bcaa740e5bc4984, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 1024
+      value: 576
       objectReference: {fileID: 0}
     - target: {fileID: 956983946819859878, guid: 896fd497b6191f347bcaa740e5bc4984, type: 3}
       propertyPath: m_AnchoredPosition.y
@@ -2893,6 +2893,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1646701503}
   - component: {fileID: 1646701502}
+  - component: {fileID: 1646701504}
   m_Layer: 0
   m_Name: SceneContext
   m_TagString: Untagged
@@ -2913,7 +2914,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _scriptableObjectInstallers: []
-  _monoInstallers: []
+  _monoInstallers:
+  - {fileID: 1646701504}
   _installerPrefabs: []
   _autoRun: 1
   OnPreInstall:
@@ -2946,6 +2948,19 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1646701504
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1646701501}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7801e2b940340a84e9398c71a1d84cde, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  playerInventory: {fileID: 6583727631603918083}
 --- !u!1 &1653116231
 GameObject:
   m_ObjectHideFlags: 0
@@ -4063,27 +4078,27 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5619208602167916866, guid: 513866cd2156ec44fb86188b1fb17ecc, type: 3}
       propertyPath: m_AnchorMax.y
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5619208602167916866, guid: 513866cd2156ec44fb86188b1fb17ecc, type: 3}
       propertyPath: m_AnchorMin.y
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5619208602167916866, guid: 513866cd2156ec44fb86188b1fb17ecc, type: 3}
       propertyPath: m_SizeDelta.x
-      value: 256
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5619208602167916866, guid: 513866cd2156ec44fb86188b1fb17ecc, type: 3}
       propertyPath: m_SizeDelta.y
-      value: 256
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5619208602167916866, guid: 513866cd2156ec44fb86188b1fb17ecc, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 224
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5619208602167916866, guid: 513866cd2156ec44fb86188b1fb17ecc, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: -224
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6111091076971979000, guid: 513866cd2156ec44fb86188b1fb17ecc, type: 3}
       propertyPath: onClickEvent.m_PersistentCalls.m_Calls.Array.data[0].m_Target
@@ -4170,9 +4185,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 34e7254b154daaf44b7e8f862a3de6e2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  itemsDefaultParent: {fileID: 48442139}
   backpackTransform: {fileID: 2027050549}
   itemsFactory:
     itemsParent: {fileID: 6583727631603918078}
+  sizeLimit: {x: 6, y: 6}
   ___testBool: 0
   itemId: 0
   cellId: {x: 0, y: 0}
@@ -4246,11 +4263,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4414291845702002282, guid: 48a7965a261f64946990f6b0fba6dfd0, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 1106
+      value: 1314
       objectReference: {fileID: 0}
     - target: {fileID: 4414291845702002282, guid: 48a7965a261f64946990f6b0fba6dfd0, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: -833.66284
+      value: -323.74316
       objectReference: {fileID: 0}
     - target: {fileID: 4414291845702002282, guid: 48a7965a261f64946990f6b0fba6dfd0, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
