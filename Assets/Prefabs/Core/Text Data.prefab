@@ -47,6 +47,7 @@ MonoBehaviour:
   languageData:
     menuData:
     - Start
+    - Backpack Idle
     gameData: []
   textToFind: 
   debugTextOnValidate: 0
