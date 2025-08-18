@@ -48,6 +48,9 @@ MonoBehaviour:
     menuData:
     - Start
     - Backpack Idle
-    gameData: []
+    gameData:
+    - Fight
+    - Refresh
+    - Close
   textToFind: 
   debugTextOnValidate: 0
