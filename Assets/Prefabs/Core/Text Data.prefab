@@ -52,5 +52,14 @@ MonoBehaviour:
     - Fight
     - Refresh
     - Close
+    - Damage
+    - Heal
+    - Rifle
+    - Pistol
+    - Bomb
+    - Painkiller
+    - Caffeine
+    - Attack Speed
+    - Cooldown
   textToFind: 
   debugTextOnValidate: 0

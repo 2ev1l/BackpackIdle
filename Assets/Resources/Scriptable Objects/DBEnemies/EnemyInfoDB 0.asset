@@ -1,0 +1,23 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ac44acbc98452634c931723103e9c859, type: 3}
+  m_Name: EnemyInfoDB 0
+  m_EditorClassIdentifier: 
+  data:
+    id: 0
+    info:
+      stats:
+        maxHealth:
+          value: Infinity
+        health:
+          value: Infinity
+      prefab: {fileID: 3957189494310765864, guid: 9fa3e42588ac1e349a6b5bf69275ee12, type: 3}
