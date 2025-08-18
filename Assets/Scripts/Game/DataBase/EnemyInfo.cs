@@ -8,8 +8,7 @@ namespace Game.DataBase
     public class EnemyInfo : EntityInfo
     {
         #region fields & properties
-        public Entity Prefab => prefab;
-        [SerializeField] private Entity prefab;
+
         #endregion fields & properties
 
         #region methods

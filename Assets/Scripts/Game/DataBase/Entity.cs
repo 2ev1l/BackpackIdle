@@ -11,13 +11,13 @@ namespace Game.DataBase
         public UnityAction OnDead;
         public UnityAction OnBeforeInitialized;
         public UnityAction OnInitialized;
-        public EntityInfo Info => info;
-        private EntityInfo info;
-        public bool IsDead => Info.Stats.Health.Value == 0;
+        public EntityStats Info => info;
+        private EntityStats info;
+        public bool IsDead => Info.Health.Value == 0;
         #endregion fields & properties
 
         #region methods
-        public virtual void Initialize(EntityInfo info)
+        public virtual void Initialize(EntityStats info)
         {
             OnBeforeInitialized?.Invoke();
             this.info = info;
@@ -30,8 +30,8 @@ namespace Game.DataBase
                 Debug.LogError($"Heal must be > 0 ({amount})");
                 return;
             }
-            Info.Stats.Health.Value += amount;
-            Info.Stats.MaxHealth.Value += amount;
+            Info.Health.Value += amount;
+            Info.MaxHealth.Value += amount;
         }
         public void ReceiveDamage(float amount)
         {
@@ -40,7 +40,7 @@ namespace Game.DataBase
                 Debug.LogError($"Damage must be > 0 ({amount})");
                 return;
             }
-            Info.Stats.Health.SetValueOrZero(Info.Stats.Health.Value - amount);
+            Info.Health.SetValueOrZero(Info.Health.Value - amount);
 
             if (IsDead)
             {
