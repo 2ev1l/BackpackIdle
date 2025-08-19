@@ -12,12 +12,19 @@ namespace Game.Installers
     {
         #region fields & properties
         [SerializeField] private PlayerInventoryInstance playerInventory;
+        [SerializeField] private WeaponBulletFactory bulletFactory;
         #endregion fields & properties
 
         #region methods
         public override void InstallBindings()
         {
             InstallPlayerInventory();
+            InstallBulletFactory();
+        }
+        private void InstallBulletFactory()
+        {
+            Container.BindInterfacesAndSelfTo<WeaponBulletFactory>().FromInstance(bulletFactory).AsSingle().NonLazy();
+            Container.QueueForInject(bulletFactory);
         }
         private void InstallPlayerInventory()
         {
