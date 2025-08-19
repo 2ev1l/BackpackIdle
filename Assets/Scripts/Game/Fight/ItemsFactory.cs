@@ -19,6 +19,10 @@ namespace Game.Fight
         #endregion fields & properties
 
         #region methods
+        public void ClearItems()
+        {
+            instancesPool.DisableObjects();
+        }
         public void SpawnItemsAtPositions(InventoryData inventory, Dictionary<ItemData, int> itemsAtPositions)
         {
             foreach (var kv in itemsAtPositions)

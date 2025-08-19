@@ -90,10 +90,22 @@ namespace Universal.Serialization
             string json = File.ReadAllText(path);
             return JsonUtility.FromJson<T>(json);
         }
+        private void OnDestroy()
+        {
+            SaveAll();
+        }
         public void OnApplicationQuit()
         {
             SaveAll();
         }
+        public void OnApplicationPause(bool pauseStatus)
+        {
+            if (pauseStatus)
+            {
+                SaveAll();
+            }
+        }
+
         #endregion methods
     }
 }

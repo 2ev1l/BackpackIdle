@@ -71,6 +71,7 @@ namespace Game.Fight
         public void LoadItems()
         {
             InitializeItems();
+            itemsFactory.ClearItems();
             itemsFactory.SpawnItemsAtPositions(Context, itemsAtPositions);
             if (randomItemsGenerator.HasGeneratedItems(Context)) return;
             GenerateRandomItems();

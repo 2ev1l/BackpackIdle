@@ -49,6 +49,7 @@ namespace Game.Fight
         {
             StopActivate();
             UnSubscribe();
+            CancelInvoke();
         }
         private void Subscribe()
         {
@@ -74,14 +75,14 @@ namespace Game.Fight
             activationDelay.TryBreakDelaying();
             UpdateProgressUI(0);
         }
-        public IEnumerator ActivateSkillDelayed(float delay)
+        public void ActivateSkillDelayed(float delay)
         {
-            yield return new WaitForSeconds(delay);
-            ActivateSkill();
+            Invoke(nameof(ActivateSkill), delay);
         }
         public void ActivateSkill()
         {
             if (!activationDelay.CanActivate) return;
+            if (!gameObject.activeInHierarchy) return;
             Invoke(ItemInfo.ActivationMethod, 0);
             activationDelay.Activate();
         }

@@ -36,9 +36,16 @@ namespace Game.Fight
             Vector3 finalLocalPos = transform.parent.InverseTransformPoint(target.transform.position);
             finalLocalPos.z = 0;
             positionChanger.SetValues(transform.localPosition, finalLocalPos);
-            positionChanger.SetActions(x => transform.localPosition = x, OnMoveEnd);
+            positionChanger.SetActions(x => transform.localPosition = x, OnMoveEnd, StopMoveChecker);
             positionChanger.Restart(time);
             FixRotation();
+        }
+
+        private bool StopMoveChecker()
+        {
+            if (gameObject.activeInHierarchy) return false;
+            DisableObject();
+            return true;
         }
         private void OnMoveEnd()
         {

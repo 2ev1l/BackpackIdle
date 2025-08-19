@@ -26,7 +26,7 @@ namespace Game.Fight
             base.OnListUpdate(param);
             skillActivator.Initialize(Context);
             if (Context.ItemData.Info.ItemInfo.IsAutoActivatable)
-                StartCoroutine(skillActivator.ActivateSkillDelayed(0.5f));
+                skillActivator.ActivateSkillDelayed(0.5f);
         }
         #endregion methods
     }

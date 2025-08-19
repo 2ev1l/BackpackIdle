@@ -39,7 +39,8 @@ namespace Game.Fight
         public GameObject FindEnemy(ItemInfo forItem)
         {
             //can be realized target search etc...
-            return transform.parent.GetComponentInChildren<EnemyInstance>(false).gameObject;
+            var found = transform.parent.GetComponentInChildren<EnemyInstance>(false);
+            return found == null ? null : found.gameObject;
         }
         #endregion methods
     }
