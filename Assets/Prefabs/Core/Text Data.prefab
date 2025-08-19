@@ -61,5 +61,7 @@ MonoBehaviour:
     - Caffeine
     - Attack Speed
     - Cooldown
+    - Width
+    - Height
   textToFind: 
   debugTextOnValidate: 0

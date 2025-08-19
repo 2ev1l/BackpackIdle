@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 2076131961746904403}
   - component: {fileID: 6577410573788478875}
   - component: {fileID: 1953227748983432372}
+  - component: {fileID: 2141940246976647035}
   m_Layer: 5
   m_Name: Backpack Cell
   m_TagString: Untagged
@@ -75,3 +76,19 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 0.25
+--- !u!114 &2141940246976647035
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4553776188656815575}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7201033ccdda8c64a9d4401571ed9d31, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  icon: {fileID: 1953227748983432372}
+  defaultColor: {r: 0.93333334, g: 0.81960785, b: 0.7254902, a: 1}
+  activeColor: {r: 0.75686276, g: 0.93333334, b: 0.7254902, a: 1}
+  occupiedColor: {r: 0.99215686, g: 0.54509807, b: 0.5647059, a: 1}

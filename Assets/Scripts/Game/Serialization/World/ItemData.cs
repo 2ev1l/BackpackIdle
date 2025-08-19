@@ -31,9 +31,10 @@ namespace Game.Serialization.World
             return true;
         }
 
-        public ItemData(int id, int dataId) : base(id)
+        public ItemData(int id, int dataId, int level = 1) : base(id)
         {
             this.dataId = dataId;
+            this.level = level;
         }
         #endregion methods
     }

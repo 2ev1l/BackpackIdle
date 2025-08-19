@@ -82,16 +82,6 @@ namespace Game.DataBase
             enemiesInfo.CatchExceptions(x => x.Data.Info.Stats.Health.Value <= 0, e, "Health must be > 0");
             enemiesInfo.CatchExceptions(x => x.Data.Info.Stats.MaxHealth.Value <= 0, e, "Max Health must be > 0");
         }
-        private void CatchWeaponsInfoExceptions(DBSOSet<ItemInfoDBSO> itemsInfo, System.Func<WeaponInfo, bool> exceptionMatch, string errorMessage)
-        {
-            System.Exception e = new();
-            itemsInfo.CatchExceptions(x =>
-            {
-                if (x.Data.ItemInfo is not WeaponInfo weaponInfo) return false;
-                return exceptionMatch.Invoke(weaponInfo);
-            }, e, errorMessage);
-        }
-
         private void CatchItemsInfoExceptions(DBSOSet<ItemInfoDBSO> itemsInfo)
         {
             System.Exception e = new();
@@ -99,7 +89,6 @@ namespace Game.DataBase
             itemsInfo.CatchExceptions(x => x.Data.ItemInfo.EffectBinding.Effect == null, e, "Effect in binding must be not null");
             itemsInfo.CatchExceptions(x => x.Data.ItemInfo.LevelsInfo.Count < 1, e, "Levels must be >= 1");
             itemsInfo.CatchExceptions(x => x.Data.ItemInfo.ActivationDelayInfo == null, e, "Activation delay must be not null");
-            itemsInfo.CatchExceptions(x => x.Data.ItemInfo.Prefab == null, e, "Prefab must be not null");
         }
 #endif //UNITY_EDITOR
     }

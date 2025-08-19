@@ -23,23 +23,22 @@ namespace Game.DataBase
         [SerializeField][Min(0f)] private float activationDelay = 1f;
         public bool IsAutoActivatable => isAutoActivatable;
         [SerializeField] private bool isAutoActivatable = false;
-        /// <summary>
-        /// SET IS ONLY FOR EDITOR
-        /// </summary>
-        public StaticPoolableObject Prefab
-        {
-            get => prefab;
-#if UNITY_EDITOR
-            set => prefab = value;
-#endif
-        }
-        [SerializeField] private StaticPoolableObject prefab;
         public Shape Shape => shape;
         [SerializeField] private Shape shape;
         public int MaxLevel => levelsInfo.Count;
         #endregion fields & properties
 
         #region methods
+        public void GetEffectStatInfos(int level, List<EffectStatInfo> output)
+        {
+            EffectStatInfo delayInfo = activationDelayInfo.Info;
+            activationDelayInfo.SetInfoDescription(activationDelay.ToString());
+            output.Add(delayInfo);
+
+            EffectStatInfo effectBindingInfo = effectBinding.Effect.Info;
+            effectBindingInfo.SetDescription(GetValueForLevel(level).ToString());
+            output.Add(effectBindingInfo);
+        }
         public ItemEffectLevelInfo GetLevelInfo(int level) => levelsInfo[level - 1];
         public bool CanUpgrade(int currentLevel) => currentLevel < MaxLevel;
         public bool IsLevelValid(int level)
