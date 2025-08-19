@@ -13,8 +13,6 @@ namespace Game.DataBase
         /// </summary>
         public EntityStats Stats => stats.Clone();
         [SerializeField] private EntityStats stats = new();
-        public Entity Prefab => prefab;
-        [SerializeField] private Entity prefab;
         #endregion fields & properties
 
         #region methods

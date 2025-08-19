@@ -2,27 +2,50 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
+using Universal.Collections;
 
 namespace Game.DataBase
 {
-    public class Entity : MonoBehaviour, IDamageReceiver
+    public class Entity : StaticPoolableObject, IDamageReceiver
     {
         #region fields & properties
-        public UnityAction OnDead;
-        public UnityAction OnBeforeInitialized;
-        public UnityAction OnInitialized;
-        public EntityStats Info => info;
-        private EntityStats info;
-        public bool IsDead => Info.Health.Value == 0;
+        public UnityEvent OnDead;
+        public EntityStats Stats => stats;
+        private EntityStats stats;
+        public bool IsDead => Stats.Health.Value == 0;
+        private bool isSubscribed = false;
         #endregion fields & properties
 
         #region methods
+        protected virtual void OnEnable()
+        {
+            Subscribe();
+        }
+        protected virtual void OnDisable()
+        {
+            UnSubscribe();
+        }
         public virtual void Initialize(EntityStats info)
         {
-            OnBeforeInitialized?.Invoke();
-            this.info = info;
-            OnInitialized?.Invoke();
+            Subscribe();
+            this.stats = info;
+            UnSubscribe();
         }
+        private void Subscribe()
+        {
+            if (isSubscribed || Stats == null) return;
+            OnSubscribe();
+            isSubscribed = true;
+        }
+        private void UnSubscribe()
+        {
+            if (!isSubscribed || Stats == null) return;
+            OnUnSubscribe();
+            isSubscribed = false;
+        }
+        protected virtual void OnSubscribe() { }
+        protected virtual void OnUnSubscribe() { }
+
         public void Heal(float amount)
         {
             if (amount <= 0)
@@ -30,8 +53,8 @@ namespace Game.DataBase
                 Debug.LogError($"Heal must be > 0 ({amount})");
                 return;
             }
-            Info.Health.Value += amount;
-            Info.MaxHealth.Value += amount;
+            Stats.MaxHealth.Value += amount;
+            Stats.Health.Value += amount;
         }
         public void ReceiveDamage(float amount)
         {
@@ -40,7 +63,7 @@ namespace Game.DataBase
                 Debug.LogError($"Damage must be > 0 ({amount})");
                 return;
             }
-            Info.Health.SetValueOrZero(Info.Health.Value - amount);
+            Stats.Health.SetValueOrZero(Stats.Health.Value - amount);
 
             if (IsDead)
             {
