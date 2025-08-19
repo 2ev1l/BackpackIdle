@@ -41,7 +41,7 @@ namespace Game.Serialization.World
             return items.IndexOf(itemIdToFind);
         }
         public void IncreaseHeight() => IncreaseHeight(1);
-        private void IncreaseHeight(int amountToAdd)
+        public void IncreaseHeight(int amountToAdd)
         {
             if (amountToAdd <= 0)
             {
@@ -59,7 +59,7 @@ namespace Game.Serialization.World
         }
 
         public void IncreaseWidth() => IncreaseWidth(1);
-        private void IncreaseWidth(int amountToAdd)
+        public void IncreaseWidth(int amountToAdd)
         {
             if (amountToAdd <= 0)
             {

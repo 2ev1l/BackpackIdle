@@ -1,6 +1,7 @@
 using EditorCustom.Attributes;
 using Game.Serialization.World;
 using Game.UI.Collections;
+using Game.UI.Overlay;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -81,16 +82,25 @@ namespace Game.Fight
             randomItemsGenerator.GenerateRandomItems(Context);
         }
         [SerializedMethod]
-        public void IncreaseVerticalSize()
+        public void SendIncreaseSizeRequest()
         {
-            if (Context.Height >= sizeLimit.y) return;
-            Context.IncreaseHeight();
+            new InventorySizeRequest(Context, sizeLimit).Send();
         }
         [SerializedMethod]
-        public void IncreaseHorizontalSize()
+        public void IncreaseVerticalSize(int value)
         {
-            if (Context.Width >= sizeLimit.x) return;
-            Context.IncreaseWidth();
+            int maxIncrease = sizeLimit.y - Context.Height;
+            value = Mathf.Min(maxIncrease, value);
+            if (value <= 0) return;
+            Context.IncreaseHeight(value);
+        }
+        [SerializedMethod]
+        public void IncreaseHorizontalSize(int value)
+        {
+            int maxIncrease = sizeLimit.x - Context.Width;
+            value = Mathf.Min(maxIncrease, value);
+            if (value <= 0) return;
+            Context.IncreaseWidth(value);
         }
         public void FixBackpackTransform()
         {

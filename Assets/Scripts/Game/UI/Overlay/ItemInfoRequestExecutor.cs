@@ -6,22 +6,16 @@ using Universal.Events;
 
 namespace Game.UI.Overlay
 {
-    public class ItemInfoRequestExecutor : RequestExecutorBehaviour
+    public class ItemInfoRequestExecutor : OverlayRequestExecutor<ItemInfoRequest>
     {
         #region fields & properties
-        [SerializeField] private Universal.Behaviour.StateMachineBehaviour overlayStateMachine;
-        [SerializeField] private StateChange infoState;
         [SerializeField] private ItemInfoExposer infoExposer;
         #endregion fields & properties
 
         #region methods
-        public override bool TryExecuteRequest(ExecutableRequest request)
+        protected override void ExecuteRequest(ItemInfoRequest req)
         {
-            if (request is not ItemInfoRequest info) return false;
-            overlayStateMachine.ApplyState(infoState);
-            infoExposer.Expose(info.ItemInfo, info.Level);
-            request.Close();
-            return true;
+            infoExposer.Expose(req.ItemInfo, req.Level);
         }
         #endregion methods
     }
