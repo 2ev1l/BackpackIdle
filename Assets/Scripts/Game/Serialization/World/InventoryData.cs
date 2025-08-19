@@ -116,6 +116,10 @@ namespace Game.Serialization.World
             return true;
         }
 
+        public void AddEmptyItem(int infoId, int level = 1)
+        {
+            itemsData.AddItem(infoId, level);
+        }
         public bool TryPlaceItem(ItemData itemToPlace, int startX, int startY)
         {
             if (!CanPlaceItem(itemToPlace, startX, startY, out ItemData occupiedItem))

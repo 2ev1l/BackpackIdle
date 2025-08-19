@@ -18,12 +18,12 @@ namespace Game.Fight
         public const int CELL_PADDING = 96;
         public const int DEFAULT_BACKPACK_SIZE = 1024;
 
-        public RectTransform ItemsDefaultParent => itemsDefaultParent;
-        [SerializeField] private RectTransform itemsDefaultParent;
+        public RectTransform ItemsDefaultParent => itemsFactory.DefaultItemsParent;
         public RectTransform ItemsParent => itemsFactory.ItemsParent;
         [SerializeField] private RectTransform backpackTransform;
         [SerializeField] private ItemsFactory itemsFactory;
         [SerializeField] private Vector2Int sizeLimit = new(6, 6);
+        [SerializeField] private RandomItemsGenerator randomItemsGenerator;
         private readonly Dictionary<ItemData, int> itemsAtPositions = new();
         #endregion fields & properties
 
@@ -33,12 +33,14 @@ namespace Game.Fight
             base.OnSubscribe();
             Context.OnSizeChanged += FixBackpackTransform;
             Context.ItemsData.OnItemAdded += LoadItem;
+            Context.ItemsData.OnItemRemoved += RemoveItem;
         }
         protected override void OnUnSubscribe()
         {
             base.OnUnSubscribe();
             Context.OnSizeChanged -= FixBackpackTransform;
             Context.ItemsData.OnItemAdded -= LoadItem;
+            Context.ItemsData.OnItemRemoved -= RemoveItem;
         }
         private void InitializeItems()
         {
@@ -51,6 +53,10 @@ namespace Game.Fight
             }
         }
 
+        public void RemoveItem(ItemData itemData)
+        {
+            itemsFactory.RemoveItem(itemData);
+        }
         public void LoadItem(ItemData itemData)
         {
             int cellId = Context.FindTopLeftCellOfItem(itemData.DataId);
@@ -65,6 +71,14 @@ namespace Game.Fight
         {
             InitializeItems();
             itemsFactory.SpawnItemsAtPositions(Context, itemsAtPositions);
+            if (randomItemsGenerator.HasGeneratedItems(Context)) return;
+            GenerateRandomItems();
+        }
+
+        [SerializedMethod]
+        public void GenerateRandomItems()
+        {
+            randomItemsGenerator.GenerateRandomItems(Context);
         }
         [SerializedMethod]
         public void IncreaseVerticalSize()
@@ -98,7 +112,7 @@ namespace Game.Fight
         {
             float localX = anchoredPosition.x;
             float localY = -anchoredPosition.y;
-            
+
             if (localX < 0 || localY < 0)
             {
                 return -1;

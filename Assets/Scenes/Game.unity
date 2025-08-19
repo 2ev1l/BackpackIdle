@@ -378,7 +378,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 0.39571786}
-  m_AnchoredPosition: {x: 0, y: 239.63054}
+  m_AnchoredPosition: {x: 0, y: 239.63065}
   m_SizeDelta: {x: 0, y: -710.7}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &48442140
@@ -2052,18 +2052,18 @@ PrefabInstance:
     - target: {fileID: 8218954589867529330, guid: 8b0a823edb0562548a5ff5914f3d8f9b, type: 3}
       propertyPath: onClickEvent.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
-      objectReference: {fileID: 0}
+      objectReference: {fileID: 6583727631603918083}
     - target: {fileID: 8218954589867529330, guid: 8b0a823edb0562548a5ff5914f3d8f9b, type: 3}
       propertyPath: onClickEvent.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
       value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 8218954589867529330, guid: 8b0a823edb0562548a5ff5914f3d8f9b, type: 3}
       propertyPath: onClickEvent.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
-      value: LoadGame
+      value: GenerateRandomItems
       objectReference: {fileID: 0}
     - target: {fileID: 8218954589867529330, guid: 8b0a823edb0562548a5ff5914f3d8f9b, type: 3}
       propertyPath: onClickEvent.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
-      value: Game.UI.ButtonActions, Game.UI
+      value: Game.Fight.InventoryInstance, Game.Fight
       objectReference: {fileID: 0}
     - target: {fileID: 8218954589867529330, guid: 8b0a823edb0562548a5ff5914f3d8f9b, type: 3}
       propertyPath: onClickEvent.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
@@ -4455,14 +4455,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 34e7254b154daaf44b7e8f862a3de6e2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  itemsDefaultParent: {fileID: 48442139}
   backpackTransform: {fileID: 2027050549}
   itemsFactory:
+    defaultItemsParent: {fileID: 48442139}
     instancesPool:
       originalPrefab: {fileID: 336251027188992300, guid: 97daf517949849e499676423871be81e, type: 3}
       parentForSpawn: {fileID: 6583727631603918078}
       hideObjectsInHierarchy: 0
   sizeLimit: {x: 6, y: 6}
+  randomItemsGenerator:
+    randomItemsCount: {x: 1, y: 3}
   ___testBool: 0
   itemId: 0
   cellId: {x: 0, y: 0}
