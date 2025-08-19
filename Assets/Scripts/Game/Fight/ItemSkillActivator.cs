@@ -77,7 +77,17 @@ namespace Game.Fight
 
         private void ActivateWeaponSkill()
         {
-            ItemInfo.TryActivate(dataPackage.TargetProvider.Activator, dataPackage.TargetProvider.FindEnemy(ItemInfo), Skill, dataPackage.ItemData.Level);
+            WeaponInfo weaponInfo = ItemInfo as WeaponInfo;
+            WeaponBullet bullet = WeaponBulletFactory.Instance.SpawnBullet(weaponInfo.GetProjectileIcon(dataPackage.ItemData.Level));
+            Vector3 skillGlobalPos = Skill.transform.position;
+            bullet.transform.position = skillGlobalPos;
+            GameObject target = ItemInfo.EffectBinding.TargetType.DefineTarget(dataPackage.TargetProvider.Activator, dataPackage.TargetProvider.FindEnemy(ItemInfo), Skill);
+            bullet.MoveTo(target, 1f / weaponInfo.ProjectileSpeed, OnBulletMovedToEnemy);
+        }
+        private void OnBulletMovedToEnemy(GameObject target, WeaponBullet bullet)
+        {
+            ItemInfo.TryActivate(dataPackage.TargetProvider.Activator, target, Skill, dataPackage.ItemData.Level);
+            bullet.DisableObject();
         }
         private void ActivateItemSkill()
         {

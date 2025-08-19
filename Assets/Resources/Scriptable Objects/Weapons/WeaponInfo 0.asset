@@ -37,4 +37,4 @@ MonoBehaviour:
     shapeGrid: 010101
   originalProjectileTexture: 0
   projectile: {fileID: 21300000, guid: 7072c2987cb7723428a59bbfec54541e, type: 3}
-  projectileSpeed: 0.4
+  projectileSpeed: 2.5
