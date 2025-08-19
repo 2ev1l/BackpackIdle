@@ -28,10 +28,9 @@ MonoBehaviour:
     effectValue: 6
   - itemIcon: {fileID: 21300000, guid: 89c0f96e89ee42d45a94833812a14f67, type: 3}
     effectValue: 12
-  activationDelayInfo: {fileID: 11400000, guid: 714a6d176af69dd4781a6137a55c34fb, type: 2}
+  activationDelayInfo: {fileID: 11400000, guid: a74f1e604446d3f46ab6e4e51c2e99e1, type: 2}
   activationDelay: 2
   isAutoActivatable: 1
-  prefab: {fileID: 8470525005917639040, guid: 896fd497b6191f347bcaa740e5bc4984, type: 3}
   shape:
     width: 2
     height: 2

@@ -11,6 +11,8 @@ using Game.Serialization.World;
 using Game.UI.Elements;
 using UnityEngine.EventSystems;
 using Universal.Events;
+using Game.UI.Overlay;
+
 
 
 #if UNITY_EDITOR
@@ -142,7 +144,7 @@ namespace Game.Fight
         public void ShowInfo()
         {
             if (isSelected) return;
-            Debug.Log("Info");
+            new ItemInfoRequest(data.Info.ItemInfo, data.Level).Send();
         }
         public void FixObjectSize() => FixObjectSize(data.Info.ItemInfo.Shape);
         private void FixObjectSize(Shape shape)

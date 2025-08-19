@@ -12,13 +12,19 @@ namespace Game.DataBase
         [SerializeField] private LanguageInfo name;
         public Sprite Icon => icon;
         [SerializeField] private Sprite icon;
+        [System.NonSerialized] private string description;
         #endregion fields & properties
 
         #region methods
-        public string GetEffectText(float value)
+        public string GetEffectText()
         {
-            return value.ToString();
+            return description;
         }
+        /// <summary>
+        /// Will not be serialized.
+        /// </summary>
+        /// <param name="value"></param>
+        internal void SetDescription(string desc) => this.description = desc;
         #endregion methods
     }
 }

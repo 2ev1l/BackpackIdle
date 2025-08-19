@@ -13,7 +13,7 @@ namespace Game.DataBase
         #endregion fields & properties
 
         #region methods
-
+        internal virtual void SetInfoDescription(string desc) => info.SetDescription(desc);
         #endregion methods
     }
 }
