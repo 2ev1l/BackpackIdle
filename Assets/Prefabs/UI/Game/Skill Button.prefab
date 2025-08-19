@@ -166,6 +166,7 @@ GameObject:
   - component: {fileID: 8505982577558695874}
   - component: {fileID: 7855873994275176609}
   - component: {fileID: 6183282842545948417}
+  - component: {fileID: 4025727295072471574}
   m_Layer: 5
   m_Name: Skill Button
   m_TagString: Untagged
@@ -324,3 +325,16 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   cooldownProgressImage: {fileID: 8266203117863190062}
+--- !u!114 &4025727295072471574
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6416855252311573492}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: afc67459957a1924a9480488773871be, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  skillActivator: {fileID: 6183282842545948417}

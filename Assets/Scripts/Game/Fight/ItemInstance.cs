@@ -12,13 +12,7 @@ using Game.UI.Elements;
 using UnityEngine.EventSystems;
 using Universal.Events;
 using Game.UI.Overlay;
-
-
-
-#if UNITY_EDITOR
-using UnityEditor;
-#endif //UNITY_EDITOR
-
+using UnityEngine.Events;
 
 namespace Game.Fight
 {
@@ -27,6 +21,7 @@ namespace Game.Fight
     public class ItemInstance : StaticPoolableObject, IDropHandler
     {
         #region fields & properties
+        public UnityAction OnItemMerged;
         [SerializeField] private Image icon;
         private ItemMove ItemMove
         {
@@ -77,7 +72,10 @@ namespace Game.Fight
             ItemMove.OnMoveStart += OnMoveStart;
             ItemMove.OnMoveEnd += OnMoveEnd;
             if (data != null)
+            {
                 data.OnUpgraded += UpdateUI;
+                data.OnUpgraded += InvokeMergeAction;
+            }
         }
         private void UnSubscribe()
         {
@@ -85,8 +83,13 @@ namespace Game.Fight
             ItemMove.OnMoveStart -= OnMoveStart;
             ItemMove.OnMoveEnd -= OnMoveEnd;
             if (data != null)
+            {
                 data.OnUpgraded -= UpdateUI;
+                data.OnUpgraded -= InvokeMergeAction;
+            }
         }
+        private void InvokeMergeAction(int _) => InvokeMergeAction();
+        private void InvokeMergeAction() => OnItemMerged?.Invoke();
         public void UpdateUI(int _) => UpdateUI();
         public void UpdateUI()
         {
@@ -149,7 +152,6 @@ namespace Game.Fight
         private void TryUpgradeItem(ItemInstance movedItem)
         {
             if (!GameData.Data.PlayerData.Inventory.TryUpgradeItem(movedItem.data, this.data)) return;
-
             movedItem.DisableObject();
         }
         private bool TryPlaceItemByIndex(int index)
@@ -165,12 +167,11 @@ namespace Game.Fight
         public void FixObjectSize() => FixObjectSize(data.Info.ItemInfo.Shape);
         private void FixObjectSize(Shape shape)
         {
+            if (transform == null) return;
             RectTransform rt = (RectTransform)transform;
             rt.SetSizeWithCurrentAnchors(RectTransform.Axis.Horizontal, InventoryInstance.ITEM_CELL_SIZE * shape.Width);
             rt.SetSizeWithCurrentAnchors(RectTransform.Axis.Vertical, InventoryInstance.ITEM_CELL_SIZE * shape.Height);
         }
-
-
         #endregion methods
     }
 }

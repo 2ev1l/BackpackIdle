@@ -13,6 +13,7 @@ namespace Game.Installers
         #region fields & properties
         [SerializeField] private PlayerInventoryInstance playerInventory;
         [SerializeField] private WeaponBulletFactory bulletFactory;
+        [SerializeField] private ParticlesFactory particlesFactory;
         #endregion fields & properties
 
         #region methods
@@ -20,6 +21,12 @@ namespace Game.Installers
         {
             InstallPlayerInventory();
             InstallBulletFactory();
+            InstallParticlesFactory();
+        }
+        private void InstallParticlesFactory()
+        {
+            Container.BindInterfacesAndSelfTo<ParticlesFactory>().FromInstance(particlesFactory).AsSingle().NonLazy();
+            Container.QueueForInject(particlesFactory);
         }
         private void InstallBulletFactory()
         {
