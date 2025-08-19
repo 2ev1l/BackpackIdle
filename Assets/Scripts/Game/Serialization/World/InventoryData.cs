@@ -130,11 +130,6 @@ namespace Game.Serialization.World
                 }
 
                 bool wasUpgraded = TryUpgradeItem(itemToPlace, occupiedItem);
-                if (wasUpgraded)
-                {
-                    RemoveItem(itemToPlace.DataId);
-                }
-
                 return wasUpgraded;
             }
 
@@ -152,14 +147,17 @@ namespace Game.Serialization.World
             ItemsData.AddItem(itemToPlace.Id, itemToPlace.Level);
             return true;
         }
-        private bool TryUpgradeItem(ItemData movedItem, ItemData occupiedItem)
+        public bool TryUpgradeItem(ItemData movedItem, ItemData occupiedItem)
         {
             bool canUpgrade = occupiedItem.CanUpgrade() &&
                               movedItem.Info.Id == occupiedItem.Info.Id &&
                               movedItem.Level == occupiedItem.Level;
 
             if (!canUpgrade) return false;
-            return occupiedItem.TryUpgrade();
+            bool wasUpgraded = occupiedItem.TryUpgrade();
+            if (wasUpgraded)
+                RemoveItem(movedItem.DataId);
+            return wasUpgraded;
         }
 
         public void RemoveItem(int itemToRemove)

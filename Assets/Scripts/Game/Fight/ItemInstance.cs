@@ -24,7 +24,7 @@ namespace Game.Fight
 {
     [RequireComponent(typeof(ItemMove))]
     [RequireComponent(typeof(CustomButton))]
-    public class ItemInstance : StaticPoolableObject
+    public class ItemInstance : StaticPoolableObject, IDropHandler
     {
         #region fields & properties
         [SerializeField] private Image icon;
@@ -103,6 +103,7 @@ namespace Game.Fight
         }
         private void OnMoveEnd()
         {
+            if (!gameObject.activeSelf) return;
             TryChangePosition();
             DeSelect();
         }
@@ -117,9 +118,11 @@ namespace Game.Fight
             Vector2 anchoredPosition = rt.anchoredPosition;
             anchoredPosition.x -= rt.rect.width;
             int cellId = PlayerInventoryInstance.Instance.GetCellIndexFromPosition(anchoredPosition);
+
             if (cellId == InventoryData.CLEAR)
             {
-                ItemMove.ResetPositionToDefaultParent();
+                GameData.Data.PlayerData.Inventory.AddEmptyItem(data.Info.Id, data.Level);
+                DisableObject();
                 return;
             }
 
@@ -134,7 +137,20 @@ namespace Game.Fight
                 return;
             }
 
-            ItemMove.ResetPositionToDefaultParent();
+            GameData.Data.PlayerData.Inventory.AddEmptyItem(data.Info.Id, data.Level);
+            DisableObject();
+        }
+        public void OnDrop(PointerEventData eventData)
+        {
+            GameObject draggedObject = eventData.pointerDrag;
+            if (!draggedObject.TryGetComponent(out ItemInstance dragged)) return;
+            TryUpgradeItem(dragged);
+        }
+        private void TryUpgradeItem(ItemInstance movedItem)
+        {
+            if (!GameData.Data.PlayerData.Inventory.TryUpgradeItem(movedItem.data, this.data)) return;
+
+            movedItem.DisableObject();
         }
         private bool TryPlaceItemByIndex(int index)
         {
@@ -153,6 +169,8 @@ namespace Game.Fight
             rt.SetSizeWithCurrentAnchors(RectTransform.Axis.Horizontal, InventoryInstance.ITEM_CELL_SIZE * shape.Width);
             rt.SetSizeWithCurrentAnchors(RectTransform.Axis.Vertical, InventoryInstance.ITEM_CELL_SIZE * shape.Height);
         }
+
+
         #endregion methods
     }
 }
