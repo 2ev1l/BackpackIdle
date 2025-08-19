@@ -4,6 +4,7 @@ using Game.Serialization.World;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 using UnityEngine.UI;
 using Universal.Core;
 using Universal.Time;
@@ -13,9 +14,19 @@ namespace Game.Fight
     public class ItemSkillActivator : MonoBehaviour
     {
         #region fields & properties
+        /// <summary>
+        /// <see cref="{T0}"/> enemy
+        /// </summary>
+        public UnityAction<GameObject> OnSkillActivated;
+        /// <summary>
+        /// <see cref="{T0}"/> target
+        /// </summary>
+        public UnityAction<GameObject> OnSkillDamagedTarget;
+
         [SerializeField] private Image cooldownProgressImage;
         private readonly TimeDelayContinuous activationDelay = new();
         private ItemInfo ItemInfo => dataPackage.ItemData.Info.ItemInfo;
+        public SkillDataPackage DataPackage => dataPackage;
         private SkillDataPackage dataPackage;
         public GameObject Skill => gameObject;
         #endregion fields & properties
@@ -83,15 +94,19 @@ namespace Game.Fight
             bullet.transform.position = skillGlobalPos;
             GameObject target = ItemInfo.EffectBinding.TargetType.DefineTarget(dataPackage.TargetProvider.Activator, dataPackage.TargetProvider.FindEnemy(ItemInfo), Skill);
             bullet.MoveTo(target, 1f / weaponInfo.ProjectileSpeed, OnBulletMovedToEnemy);
+            OnSkillActivated?.Invoke(target);
         }
         private void OnBulletMovedToEnemy(GameObject target, WeaponBullet bullet)
         {
             ItemInfo.TryActivate(dataPackage.TargetProvider.Activator, target, Skill, dataPackage.ItemData.Level);
             bullet.DisableObject();
+            OnSkillDamagedTarget?.Invoke(target);
         }
         private void ActivateItemSkill()
         {
-            ItemInfo.TryActivate(dataPackage.TargetProvider.Activator, dataPackage.TargetProvider.FindEnemy(ItemInfo), Skill, dataPackage.ItemData.Level);
+            GameObject enemy = dataPackage.TargetProvider.FindEnemy(ItemInfo);
+            ItemInfo.TryActivate(dataPackage.TargetProvider.Activator, enemy, Skill, dataPackage.ItemData.Level);
+            OnSkillActivated?.Invoke(enemy);
         }
         #endregion methods
     }

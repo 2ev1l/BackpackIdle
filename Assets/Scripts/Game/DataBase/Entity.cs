@@ -10,6 +10,14 @@ namespace Game.DataBase
     {
         #region fields & properties
         public UnityEvent OnDead;
+        /// <summary>
+        /// <see cref="{T0}"/> - damage value
+        /// </summary>
+        public UnityEvent<float> OnDamaged;
+        /// <summary>
+        /// <see cref="{T0}"/> - heal value
+        /// </summary>
+        public UnityEvent<float> OnHealed;
         public EntityStats Stats => stats;
         private EntityStats stats;
         public bool IsDead => Stats.Health.Value == 0;
@@ -55,6 +63,7 @@ namespace Game.DataBase
             }
             Stats.MaxHealth.Value += amount;
             Stats.Health.Value += amount;
+            OnHealed?.Invoke(amount);
         }
         public void ReceiveDamage(float amount)
         {
@@ -64,7 +73,7 @@ namespace Game.DataBase
                 return;
             }
             Stats.Health.SetValueOrZero(Stats.Health.Value - amount);
-
+            OnDamaged?.Invoke(amount);
             if (IsDead)
             {
                 OnDead?.Invoke();

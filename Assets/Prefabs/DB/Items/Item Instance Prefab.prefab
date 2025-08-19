@@ -116,10 +116,24 @@ PrefabInstance:
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 4004576793634213324, guid: b7f6a325d2a866a47b66f4ad4bec8960, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 7746708360647863494}
     - targetCorrespondingSourceObject: {fileID: 2032611270563390634, guid: b7f6a325d2a866a47b66f4ad4bec8960, type: 3}
       insertIndex: -1
       addedObject: {fileID: 1732692967191486139}
   m_SourcePrefab: {fileID: 100100000, guid: b7f6a325d2a866a47b66f4ad4bec8960, type: 3}
+--- !u!114 &336251027188992300 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 107155256467649965, guid: b7f6a325d2a866a47b66f4ad4bec8960, type: 3}
+  m_PrefabInstance: {fileID: 420571599710993537}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3622361691522806093}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f4776c33bdf82ff4aa4d18518c917507, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1865443016295503915 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 2032611270563390634, guid: b7f6a325d2a866a47b66f4ad4bec8960, type: 3}
@@ -140,3 +154,22 @@ MonoBehaviour:
   m_EffectColor: {r: 0, g: 0, b: 0, a: 1}
   m_EffectDistance: {x: 5, y: -5}
   m_UseGraphicAlpha: 1
+--- !u!1 &3622361691522806093 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 4004576793634213324, guid: b7f6a325d2a866a47b66f4ad4bec8960, type: 3}
+  m_PrefabInstance: {fileID: 420571599710993537}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &7746708360647863494
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3622361691522806093}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b8836c111e95ce546a0c7685479d8647, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  item: {fileID: 336251027188992300}
+  mergeParticles: {fileID: -4061117946314411366, guid: 8dd517701736d554cadd48e227e4984a, type: 3}
