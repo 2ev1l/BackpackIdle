@@ -20,12 +20,14 @@ namespace Game.DataBase
         [SerializeField] private List<ItemEffectLevelInfo> levelsInfo;
         public EffectStatInfo ActivationDelayInfo => activationDelayInfo.Info;
         [SerializeField] private EffectStatInfoSO activationDelayInfo;
+        public float ActivationDelay => activationDelay;
         [SerializeField][Min(0f)] private float activationDelay = 1f;
         public bool IsAutoActivatable => isAutoActivatable;
         [SerializeField] private bool isAutoActivatable = false;
         public Shape Shape => shape;
         [SerializeField] private Shape shape;
         public int MaxLevel => levelsInfo.Count;
+        public virtual string ActivationMethod => "ActivateItemSkill";
         #endregion fields & properties
 
         #region methods

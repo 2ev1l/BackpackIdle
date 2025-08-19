@@ -78,7 +78,6 @@ namespace Game.DataBase
             System.Exception e = new();
             CatchItemsInfoExceptions(itemsInfo);
 
-            enemiesInfo.CatchExceptions(x => x.Data.Info.Prefab == null, e, "Prefab must be not null");
             enemiesInfo.CatchExceptions(x => x.Data.Info.Stats.Health.Value <= 0, e, "Health must be > 0");
             enemiesInfo.CatchExceptions(x => x.Data.Info.Stats.MaxHealth.Value <= 0, e, "Max Health must be > 0");
         }

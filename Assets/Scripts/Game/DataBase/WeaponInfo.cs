@@ -13,6 +13,7 @@ namespace Game.DataBase
         [SerializeField][DrawIf(nameof(originalProjectileTexture), false)] private Sprite projectile;
         public float ProjectileSpeed => projectileSpeed;
         [SerializeField][Min(0)] private float projectileSpeed = 1f;
+        public override string ActivationMethod => "ActivateWeaponSkill";
         #endregion fields & properties
 
         #region methods
