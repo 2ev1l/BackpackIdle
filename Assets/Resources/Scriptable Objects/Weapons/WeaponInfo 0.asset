@@ -31,7 +31,7 @@ MonoBehaviour:
   activationDelayInfo: {fileID: 11400000, guid: 714a6d176af69dd4781a6137a55c34fb, type: 2}
   activationDelay: 0.5
   isAutoActivatable: 1
-  prefab: {fileID: 1082018664524074572, guid: 97daf517949849e499676423871be81e, type: 3}
+  prefab: {fileID: 336251027188992300, guid: 97daf517949849e499676423871be81e, type: 3}
   shape:
     width: 1
     height: 3

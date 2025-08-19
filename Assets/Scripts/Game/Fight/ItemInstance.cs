@@ -12,6 +12,7 @@ using Game.UI.Elements;
 using UnityEngine.EventSystems;
 using Universal.Events;
 
+
 #if UNITY_EDITOR
 using UnityEditor;
 #endif //UNITY_EDITOR
@@ -45,6 +46,7 @@ namespace Game.Fight
             }
         }
         private CustomButton button;
+        public ItemData Data => data;
         private ItemData data = null;
         public bool IsSelected => isSelected;
         private bool isSelected = false;
@@ -86,7 +88,9 @@ namespace Game.Fight
         public void UpdateUI(int _) => UpdateUI();
         public void UpdateUI()
         {
-            icon.sprite = data.Info.ItemInfo.GetLevelInfo(data.Level).ItemIcon;
+            if (icon != null)
+                icon.sprite = data.Info.ItemInfo.GetLevelInfo(data.Level).ItemIcon;
+            FixObjectSize();
         }
         private void Select() => isSelected = true;
         private void DeSelect() => isSelected = false;
@@ -119,12 +123,12 @@ namespace Game.Fight
 
             if (TryPlaceItemByIndex(cellId))
             {
-                Destroy(gameObject);
+                DisableObject();
                 return;
             }
             if (storedIndex > 0 && TryPlaceItemByIndex(storedIndex))
             {
-                Destroy(gameObject);
+                DisableObject();
                 return;
             }
 
@@ -140,79 +144,13 @@ namespace Game.Fight
             if (isSelected) return;
             Debug.Log("Info");
         }
-        #endregion methods
-
-#if UNITY_EDITOR
-        [Title("Generate prefab params")]
-        [SerializeField] private ItemInfoDBSO itemInfo;
-        [SerializeField][Min(1)] private int levelToSet = 1;
-        [Button(nameof(GeneratePrefabFromInfo))]
-        protected virtual void GeneratePrefabFromInfo()
+        public void FixObjectSize() => FixObjectSize(data.Info.ItemInfo.Shape);
+        private void FixObjectSize(Shape shape)
         {
-            SetItemParams();
-            if (FixPrefabInstance()) return;
-            CreatePrefab();
-        }
-
-        protected bool FixPrefabInstance()
-        {
-            Undo.RegisterCompleteObjectUndo(gameObject, "Switch components");
-            ItemInstance newInstance = null;
-            bool GetNewInstanceOrReturn<T>() where T : ItemInstance
-            {
-                if (GetType().Equals(typeof(T))) return false;
-                newInstance = gameObject.AddComponent<T>();
-                return true;
-            }
-            switch (itemInfo.Data.ItemInfo)
-            {
-                case WeaponInfo:
-                    if (!GetNewInstanceOrReturn<WeaponInstance>()) return false;
-                    break;
-                default:
-                    if (!GetNewInstanceOrReturn<ItemInstance>()) return false;
-                    break;
-            }
-
-            newInstance.icon = this.icon;
-            newInstance.itemInfo = this.itemInfo;
-            newInstance.levelToSet = this.levelToSet;
-
-            DestroyImmediate(this, true);
-            newInstance.CreatePrefab();
-            EditorUtility.SetDirty(newInstance.gameObject);
-            return true;
-        }
-        protected void SetItemParams()
-        {
-            Undo.RegisterCompleteObjectUndo(icon, "Change texture");
-            ItemInfo info = itemInfo.Data.ItemInfo;
-            try { icon.sprite = info.GetLevelInfo(levelToSet).ItemIcon; }
-            catch { Debug.Log("Level is not defined"); }
-            EditorUtility.SetDirty(icon);
-
-            Undo.RegisterCompleteObjectUndo(gameObject, "Change rect transform size");
-            Shape shape = info.Shape;
-            RectTransform rt = GetComponent<RectTransform>();
+            RectTransform rt = (RectTransform)transform;
             rt.SetSizeWithCurrentAnchors(RectTransform.Axis.Horizontal, InventoryInstance.ITEM_CELL_SIZE * shape.Width);
             rt.SetSizeWithCurrentAnchors(RectTransform.Axis.Vertical, InventoryInstance.ITEM_CELL_SIZE * shape.Height);
-            EditorUtility.SetDirty(gameObject);
         }
-        protected void CreatePrefab()
-        {
-            string newName = $"Item Instance {itemInfo.Id}";
-            string assetPath = $"Assets/Prefabs/DB/Items/{newName}.prefab";
-            Undo.RegisterCompleteObjectUndo(gameObject, "Set prefab as object");
-            PrefabUtility.UnpackPrefabInstance(gameObject, PrefabUnpackMode.OutermostRoot, InteractionMode.UserAction);
-            GameObject obj = PrefabUtility.SaveAsPrefabAssetAndConnect(gameObject, assetPath, InteractionMode.UserAction);
-            EditorUtility.SetDirty(gameObject);
-
-            StaticPoolableObject spo = obj.GetComponent<StaticPoolableObject>();
-            Undo.RegisterCompleteObjectUndo(itemInfo.Data.ItemInfo, "Set item info prefab");
-            itemInfo.Data.ItemInfo.Prefab = spo;
-            EditorUtility.SetDirty(itemInfo.Data.ItemInfo);
-        }
-#endif //UNITY_EDITOR
-
+        #endregion methods
     }
 }

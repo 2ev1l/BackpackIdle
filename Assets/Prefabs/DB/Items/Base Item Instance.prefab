@@ -102,6 +102,7 @@ GameObject:
   - component: {fileID: 8770209875028070795}
   - component: {fileID: 107155256467649965}
   - component: {fileID: 4365265141814083144}
+  - component: {fileID: 2453650492679353334}
   m_Layer: 5
   m_Name: Base Item Instance
   m_TagString: Untagged
@@ -126,7 +127,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: -144, y: -432}
+  m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 288, y: 864}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &107155256467649965
@@ -142,7 +143,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   icon: {fileID: 731902937116938261}
-  draggableElement: {fileID: 4365265141814083144}
   itemInfo: {fileID: 11400000, guid: d80dc0ea9f1ebfe4ea56a257d87eed5c, type: 2}
   levelToSet: 1
 --- !u!114 &4365265141814083144
@@ -173,9 +173,19 @@ MonoBehaviour:
   onDragEvent:
     m_PersistentCalls:
       m_Calls: []
-  onDragWithDataEvent:
-    m_PersistentCalls:
-      m_Calls: []
   onEndDragEvent:
     m_PersistentCalls:
       m_Calls: []
+--- !u!114 &2453650492679353334
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4004576793634213324}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6faec368239aa5943a3fc7883579a822, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  isMoveStarted: 0

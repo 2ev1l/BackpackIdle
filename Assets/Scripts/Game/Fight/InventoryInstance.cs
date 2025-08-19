@@ -33,14 +33,12 @@ namespace Game.Fight
             base.OnSubscribe();
             Context.OnSizeChanged += FixBackpackTransform;
             Context.ItemsData.OnItemAdded += LoadItem;
-            Context.ItemsData.OnItemRemoved += RemoveItem;
         }
         protected override void OnUnSubscribe()
         {
             base.OnUnSubscribe();
             Context.OnSizeChanged -= FixBackpackTransform;
             Context.ItemsData.OnItemAdded -= LoadItem;
-            Context.ItemsData.OnItemRemoved -= RemoveItem;
         }
         private void InitializeItems()
         {
@@ -53,10 +51,6 @@ namespace Game.Fight
             }
         }
 
-        public void RemoveItem(ItemData itemData)
-        {
-            itemsFactory.RemoveItem(itemData);
-        }
         public void LoadItem(ItemData itemData)
         {
             int cellId = Context.FindTopLeftCellOfItem(itemData.DataId);

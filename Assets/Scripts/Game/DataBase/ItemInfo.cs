@@ -23,17 +23,6 @@ namespace Game.DataBase
         [SerializeField][Min(0f)] private float activationDelay = 1f;
         public bool IsAutoActivatable => isAutoActivatable;
         [SerializeField] private bool isAutoActivatable = false;
-        /// <summary>
-        /// SET IS ONLY FOR EDITOR
-        /// </summary>
-        public StaticPoolableObject Prefab
-        {
-            get => prefab;
-#if UNITY_EDITOR
-            set => prefab = value;
-#endif
-        }
-        [SerializeField] private StaticPoolableObject prefab;
         public Shape Shape => shape;
         [SerializeField] private Shape shape;
         public int MaxLevel => levelsInfo.Count;

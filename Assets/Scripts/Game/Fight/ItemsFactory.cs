@@ -1,7 +1,10 @@
 using Game.Serialization.World;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
+using Universal.Collections;
+using Universal.Collections.Generic;
 
 namespace Game.Fight
 {
@@ -9,35 +12,13 @@ namespace Game.Fight
     public class ItemsFactory
     {
         #region fields & properties
-        public RectTransform ItemsParent => itemsParent;
-        [SerializeField] private RectTransform itemsParent;
-        /// <summary>
-        /// Can be made with <see cref="Universal.Collections.Generic.ObjectPool{T}"/> for garbage optimization
-        /// but it requires to remove <see cref="WeaponInstance"/> 
-        /// and use only <see cref="ItemInstance"/>
-        /// </summary>
-        private readonly Dictionary<ItemData, ItemInstance> instances = new();
+        public RectTransform ItemsParent => (RectTransform)instancesPool.ParentForSpawn;
+        [SerializeField] private ObjectPool<StaticPoolableObject> instancesPool;
         #endregion fields & properties
 
         #region methods
-        public void MoveItemsToPositions(InventoryData inventory, Dictionary<ItemData, int> itemsAtPositions)
-        {
-            foreach (var kv in itemsAtPositions)
-            {
-                MoveItemToPosition(inventory, instances[kv.Key], kv.Value);
-            }
-        }
-        private void ClearInstances()
-        {
-            foreach (var kv in instances)
-            {
-                GameObject.Destroy(kv.Value.gameObject);
-            }
-            instances.Clear();
-        }
         public void SpawnItemsAtPositions(InventoryData inventory, Dictionary<ItemData, int> itemsAtPositions)
         {
-            ClearInstances();
             foreach (var kv in itemsAtPositions)
             {
                 SpawnItemAtPosition(inventory, kv.Key, kv.Value);
@@ -51,17 +32,22 @@ namespace Game.Fight
         }
         private ItemInstance SpawnItem(ItemData item)
         {
-            ItemInstance instance = GameObject.Instantiate<ItemInstance>(item.Info.ItemInfo.Prefab as ItemInstance, itemsParent);
+            ItemInstance instance = (ItemInstance)instancesPool.GetObject();
             instance.Initialize(item);
-            instances.Add(item, instance);
             return instance;
         }
         public void RemoveItem(ItemData item)
         {
-            ItemInstance instance = instances[item];
-            instances.Remove(item);
+            ItemInstance instance = null;
+            foreach (ItemInstance el in instancesPool.Objects.Cast<ItemInstance>())
+            {
+                if (el.IsUsing) continue;
+                if (el.Data != item) continue;
+                instance = el;
+            }
+            if (instance == null) return;
             if (instance.IsSelected) return;
-            GameObject.Destroy(instance.gameObject);
+            instance.DisableObject();
         }
         private void MoveItemToPosition(InventoryData inventory, ItemInstance item, int position)
         {
